@@ -95,19 +95,23 @@
               document.getElementById('checkout-btn').style.opacity = '1';
 
               container.innerHTML = cartItems.map(item => `
-                  <div class="flex items-center gap-md" style="padding-bottom: var(--space-md); border-bottom: 1px solid #E0E0E0;">
-                      <a href="product.html?id=${item.id}"><img src="${item.images[0]}" style="width: 120px; height: 120px; border-radius: 24px; object-fit: contain; background: #F0F0F0; padding: 16px;"></a>
-                      <div class="flex-1">
-                          <h4 style="margin-bottom: 4px;">${item.name}</h4>
-                          <p class="text-muted text-sm mb-xs">${item.category}</p>
-                          <span class="price" style="font-weight: 600;">$${item.price}</span>
+                  <div class="flex gap-md" style="padding-bottom: var(--space-md); border-bottom: 1px solid #E0E0E0;">
+                      <a href="product.html?id=${item.id}"><img src="${item.images[0]}" style="width: 100px; height: 100px; border-radius: 16px; object-fit: contain; background: #F0F0F0; padding: 12px;"></a>
+                      <div class="flex flex-col justify-between flex-1">
+                          <div class="flex justify-between items-start">
+                              <div>
+                                  <h4 style="margin-bottom: 4px; font-size: 1.05rem;">${item.name}</h4>
+                                  <p class="text-muted text-sm mb-xs">${item.category}</p>
+                                  <span class="price" style="font-weight: 600;">$${item.price}</span>
+                              </div>
+                              <button onclick="window.store.removeFromCart('${item.id}')" class="icon-btn-transparent-small" style="width: 32px; height: 32px; color: var(--accent-red); background: #FFF3F3;"><i class="ph ph-trash"></i></button>
+                          </div>
+                          <div class="flex items-center gap-sm mt-sm w-fit" style="background: #F5F5F7; border-radius: var(--radius-pill); padding: 4px;">
+                              <button class="icon-btn-transparent-small" onclick="window.store.updateQuantity('${item.id}', ${item.quantity - 1})" style="width: 32px; height: 32px; background: white;"><i class="ph ph-minus"></i></button>
+                              <span style="font-weight: 500; width: 24px; text-align: center;">${item.quantity}</span>
+                              <button class="icon-btn-transparent-small" onclick="window.store.updateQuantity('${item.id}', ${item.quantity + 1})" style="width: 32px; height: 32px; background: white;"><i class="ph ph-plus"></i></button>
+                          </div>
                       </div>
-                      <div class="flex items-center gap-sm" style="background: #F5F5F7; border-radius: var(--radius-pill); padding: 4px;">
-                          <button class="icon-btn-transparent-small" onclick="window.store.updateQuantity('${item.id}', ${item.quantity - 1})" style="width: 32px; height: 32px; background: white;"><i class="ph ph-minus"></i></button>
-                          <span style="font-weight: 500; width: 24px; text-align: center;">${item.quantity}</span>
-                          <button class="icon-btn-transparent-small" onclick="window.store.updateQuantity('${item.id}', ${item.quantity + 1})" style="width: 32px; height: 32px; background: white;"><i class="ph ph-plus"></i></button>
-                      </div>
-                      <button onclick="window.store.removeFromCart('${item.id}')" class="icon-btn-transparent-small ml-sm" style="width: 40px; height: 40px; color: var(--accent-red); background: #FFF3F3;"><i class="ph ph-trash"></i></button>
                   </div>
               `).join('');
 
