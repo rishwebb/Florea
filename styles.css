@@ -103,6 +103,7 @@ p { color: var(--text-muted); font-size: clamp(0.95rem, 2vw, 1rem); line-height:
 .pt-xl { padding-top: var(--space-xl); }
 
 .w-full { width: 100%; }
+.w-fit { width: fit-content; }
 .text-red { color: var(--accent-red); }
 .text-yellow { color: #FFB020; }
 .text-white { color: #FFF; }
