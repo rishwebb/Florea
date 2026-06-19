@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist Spaces | Floréa Journal</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container page-transition">
+    
+    <div id="header-root"></div>
+
+    <main class="mb-xl fade-in-section">
+        
+        <!-- Back to Journal -->
+        <a href="blog.html" class="inline-flex items-center gap-xs text-muted hover-text-main mb-md transition" style="font-weight: 500;">
+            <i class="ph ph-arrow-left"></i> Back to Journal
+        </a>
+
+        <!-- Article Hero -->
+        <div class="bento-card mb-lg" style="position: relative; min-height: 500px; display: flex; align-items: flex-end; padding: var(--space-2xl); background: #EAE6DF; overflow: hidden;">
+            <img src="assets/images/interior_styling_1781843302973.png" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.9;">
+            <!-- Gradient Overlay for text readability -->
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);"></div>
+            
+            <div class="z-10 relative" style="color: white; max-width: 800px;">
+                <div class="flex items-center gap-sm mb-sm text-sm" style="opacity: 0.9;">
+                    <span class="badge outline" style="border-color: rgba(255,255,255,0.5); color: white;">INTERIOR STYLING</span>
+                    <span>•</span>
+                    <span>Oct 12, 2026</span>
+                    <span>•</span>
+                    <span>5 min read</span>
+                </div>
+                <h1 style="font-size: 3.5rem; line-height: 1.1; text-shadow: 0 4px 12px rgba(0,0,0,0.1);">Minimalist Spaces: Finding Calm Through Curated Objects</h1>
+            </div>
+        </div>
+
+        <!-- Article Content -->
+        <article class="mx-auto" style="max-width: 720px; font-size: 1.15rem; line-height: 1.8; color: var(--text-main);">
+            
+            <p class="mb-md text-muted">In a world defined by constant motion and digital noise, the modern home has taken on a new level of importance. It is no longer just a place to live; it is a sanctuary. But achieving true peace within four walls requires more than simply decluttering—it requires intentional curation.</p>
+
+            <h2 class="mt-lg mb-sm" style="font-size: 2rem;">The Philosophy of Less, but Better</h2>
+            <p class="mb-md text-muted">Minimalism is frequently misunderstood as a mandate for emptiness. A stark white room devoid of personality might be minimalist, but it is rarely comforting. True Scandinavian minimalism—the philosophy that inspires every Floréa vessel—is about selecting objects that carry emotional weight and visual warmth.</p>
+            
+            <p class="mb-md text-muted">When you bring a handcrafted ceramic piece into your home, you are not just filling a corner. You are introducing a sculptural element that grounds the space. The tactile nature of raw clay, the subtle imperfections of a hand-thrown curve—these details invite the eye to rest and the mind to slow down.</p>
+
+            <!-- Pull Quote -->
+            <blockquote class="bento-card mb-md text-center" style="padding: var(--space-xl); background: #F5F5F7; border-left: 4px solid var(--text-main); border-radius: var(--radius-card-sm);">
+                <p style="font-size: 1.5rem; font-style: italic; font-weight: 500; color: var(--text-main); line-height: 1.4;">"A vase is not merely a vessel for holding flowers, but a sculptural presence that anchors a room."</p>
+            </blockquote>
+
+            <h2 class="mt-lg mb-sm" style="font-size: 2rem;">Styling with Purpose</h2>
+            <p class="mb-md text-muted">To style your ceramics for maximum impact, consider the concept of negative space. Do not overcrowd your shelving. Allow a single <a href="shop.html?filter=sculptural" style="color: var(--text-main); text-decoration: underline;">Sculptural Vase</a> to stand alone on a wooden credenza, accompanied perhaps by nothing more than a shaft of afternoon sunlight.</p>
+
+            <p class="mb-xl text-muted">When curating your space, prioritize texture over color. The interplay of a ribbed clay vessel against smooth linen curtains, or a matte white porcelain vase resting on a raw oak table, creates a quiet, sensory richness that bright colors simply cannot achieve.</p>
+
+        </article>
+
+        <!-- Read Next / Shop -->
+        <div class="mt-2xl border-top pt-xl" style="border-top: 1px solid #E0E0E0;">
+            <div class="flex justify-between items-end mb-lg">
+                <h2>Featured in this Story</h2>
+                <a href="shop.html" class="pill-btn hover-elevate" style="background: #FFF; border: 1px solid #E0E0E0;">Shop the Collection</a>
+            </div>
+            
+            <div class="grid" style="grid-template-columns: repeat(2, 1fr); gap: var(--space-md);">
+                <a href="product.html?id=prod_1" class="bento-card flex items-center gap-md hover-elevate transition" style="padding: var(--space-md); background: #FFF; border: 1px solid #EAEAEA;">
+                    <img src="assets/images/hero_vase_1781843237863.png" style="width: 100px; height: 100px; object-fit: cover; border-radius: 12px; background: #F5F5F7;">
+                    <div>
+                        <h4 class="mb-xs">Ethereal White</h4>
+                        <p class="text-muted text-sm">$320</p>
+                    </div>
+                </a>
+                <a href="product.html?id=prod_5" class="bento-card flex items-center gap-md hover-elevate transition" style="padding: var(--space-md); background: #FFF; border: 1px solid #EAEAEA;">
+                    <img src="assets/images/interior_styling_1781843302973.png" style="width: 100px; height: 100px; object-fit: cover; border-radius: 12px; background: #F5F5F7;">
+                    <div>
+                        <h4 class="mb-xs">Nordic Shadow</h4>
+                        <p class="text-muted text-sm">$195</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="footer-root"></div>
+  </div>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+</body>
+</html>

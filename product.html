@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product | Floréa</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container page-transition">
+    
+    <div id="header-root"></div>
+
+    <div id="loading-state" class="text-center p-xl mt-xl">
+        <div style="width: 40px; height: 40px; border: 3px solid #EEE; border-top-color: var(--text-main); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+    </div>
+
+    <main id="product-content" class="grid mt-sm mb-xl hidden" style="grid-template-columns: 1fr 1fr; gap: var(--space-xl);">
+        
+        <!-- Left: Image -->
+        <div class="bento-card hover-zoom" style="min-height: 500px; position: relative; overflow: hidden; background: #EAE6DF;">
+            <div class="floating-glass-card top-left z-10" style="top: var(--space-md); left: var(--space-md); padding: 6px 12px;">
+                <div class="price-row" style="margin-bottom: 0;">
+                    <span id="p-rating" class="rating flex items-center gap-xs" style="font-size: 0.9rem; font-weight: 500;"><i class="ph-fill ph-star text-yellow"></i> <span></span></span>
+                </div>
+            </div>
+            <img id="p-img" src="" alt="Product" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+        </div>
+
+        <!-- Right: Info -->
+        <div class="flex flex-col justify-center" style="padding-left: var(--space-sm); padding-right: var(--space-lg);">
+            <div class="mb-md">
+                <span id="p-cat" class="badge outline mb-sm" style="display: inline-block; font-size: 0.7rem; padding: 4px 8px;"></span>
+                <h1 id="p-name" style="font-size: 2.75rem; line-height: 1.1; margin-bottom: 8px; font-weight: 500; letter-spacing: -0.02em;"></h1>
+                
+                <div class="flex items-center gap-md">
+                    <h3 id="p-price" style="font-size: 1.5rem; font-weight: 400;"></h3>
+                    <span id="p-compare" class="text-muted" style="text-decoration: line-through; font-size: 1.1rem;"></span>
+                </div>
+            </div>
+            
+            <p id="p-desc" class="text-muted mb-lg" style="font-size: 1.05rem; line-height: 1.6;"></p>
+
+            <div class="grid gap-sm mb-lg" style="grid-template-columns: 1fr 1fr 1fr;">
+                <div class="bento-card flex flex-col items-center justify-center text-center hover-elevate transition" style="background:#FFF; border: 1px solid #EAEAEA; padding: 16px 8px;">
+                    <i class="ph ph-ruler text-muted mb-xs" style="font-size: 24px;"></i>
+                    <p id="p-dim" style="font-weight: 500; font-size: 0.85rem; line-height: 1.3;"></p>
+                </div>
+                <div class="bento-card flex flex-col items-center justify-center text-center hover-elevate transition" style="background:#FFF; border: 1px solid #EAEAEA; padding: 16px 8px;">
+                    <i class="ph ph-drop text-muted mb-xs" style="font-size: 24px;"></i>
+                    <p style="font-weight: 500; font-size: 0.85rem; line-height: 1.3;">Watertight</p>
+                </div>
+                <div class="bento-card flex flex-col items-center justify-center text-center hover-elevate transition" style="background:#FFF; border: 1px solid #EAEAEA; padding: 16px 8px;">
+                    <i class="ph ph-hand-palm text-muted mb-xs" style="font-size: 24px;"></i>
+                    <p id="p-mat" style="font-weight: 500; font-size: 0.85rem; line-height: 1.3;"></p>
+                </div>
+            </div>
+
+            <div class="flex gap-md items-center">
+                <div class="flex items-center justify-between" style="background: #F5F5F7; border-radius: var(--radius-pill); padding: 4px; width: 120px;">
+                    <button id="qty-minus" class="icon-btn-transparent-small" style="width: 40px; height: 40px; background: white; border-radius: 50%;"><i class="ph ph-minus"></i></button>
+                    <span id="qty-val" style="font-weight: 600; font-size: 1rem;">1</span>
+                    <button id="qty-plus" class="icon-btn-transparent-small" style="width: 40px; height: 40px; background: white; border-radius: 50%;"><i class="ph ph-plus"></i></button>
+                </div>
+                <button id="add-to-cart-btn" class="pill-btn hover-elevate flex-1" style="background: #111; color: #FFF; border: none; font-size: 1.05rem; height: 48px; display: flex; align-items: center; justify-content: center; padding: 0;">Add to Cart</button>
+                <button id="wishlist-btn" class="icon-btn-glass hover-elevate" style="width: 48px; height: 48px; background: #FFF; border: 1px solid #EAEAEA; padding: 0;"><i class="ph ph-heart" style="font-size: 20px;"></i></button>
+            </div>
+            
+            <p id="p-inventory" class="text-sm text-muted mt-sm text-center"></p>
+        </div>
+
+    </main>
+    
+    <div id="footer-root"></div>
+
+  </div>
+
+  <style>
+      @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          const urlParams = new URLSearchParams(window.location.search);
+          // Default to prod_1 if no ID provided for demo purposes
+          const productId = urlParams.get('id') || 'prod_1'; 
+          
+          let currentProduct = null;
+          let qty = 1;
+
+          window.store.subscribe((state) => {
+              if (state.products.length > 0 && !currentProduct) {
+                  currentProduct = state.products.find(p => p.id === productId);
+                  
+                  if (!currentProduct) {
+                      document.getElementById('loading-state').innerHTML = '<p>Product not found.</p>';
+                      return;
+                  }
+
+                  // Populate UI
+                  document.title = `${currentProduct.name} | Floréa`;
+                  document.getElementById('p-name').textContent = currentProduct.name;
+                  document.getElementById('p-price').textContent = `$${currentProduct.price}`;
+                  document.getElementById('p-desc').textContent = currentProduct.description;
+                  document.getElementById('p-cat').textContent = currentProduct.category.toUpperCase();
+                  document.getElementById('p-dim').textContent = currentProduct.dimensions.split('x')[0].trim();
+                  document.getElementById('p-mat').textContent = currentProduct.materials[0];
+                  document.getElementById('p-rating').querySelector('span').textContent = `${currentProduct.rating} (${currentProduct.reviews})`;
+                  
+                  if (currentProduct.compareAtPrice) {
+                      document.getElementById('p-compare').textContent = `$${currentProduct.compareAtPrice}`;
+                  }
+                  
+                  document.getElementById('p-img').src = currentProduct.images[0];
+                  
+                  if (currentProduct.inventory < 10 && currentProduct.inventory > 0) {
+                      document.getElementById('p-inventory').textContent = `Only ${currentProduct.inventory} left in stock!`;
+                      document.getElementById('p-inventory').classList.add('text-red');
+                  }
+
+                  // Setup Wishlist icon
+                  const wishIcon = document.getElementById('wishlist-btn').querySelector('i');
+                  if (state.isInWishlist(currentProduct.id)) {
+                      wishIcon.className = 'ph-fill text-red ph-heart';
+                  }
+
+                  document.getElementById('loading-state').classList.add('hidden');
+                  document.getElementById('product-content').classList.remove('hidden');
+              }
+          });
+
+          // Handlers
+          document.getElementById('qty-plus').addEventListener('click', () => {
+              qty++;
+              document.getElementById('qty-val').textContent = qty;
+          });
+          document.getElementById('qty-minus').addEventListener('click', () => {
+              if (qty > 1) qty--;
+              document.getElementById('qty-val').textContent = qty;
+          });
+
+          document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+              if (currentProduct) {
+                  window.store.addToCart(currentProduct.id, qty);
+              }
+          });
+
+          document.getElementById('wishlist-btn').addEventListener('click', (e) => {
+              if (currentProduct) {
+                  window.store.toggleWishlist(currentProduct.id);
+                  const wishIcon = e.currentTarget.querySelector('i');
+                  if (window.store.isInWishlist(currentProduct.id)) {
+                      wishIcon.className = 'ph-fill text-red ph-heart';
+                  } else {
+                      wishIcon.className = 'ph ph-heart';
+                  }
+              }
+          });
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Floréa</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container page-transition">
+    
+    <div id="header-root"></div>
+
+    <div class="flex justify-between items-center mb-md mt-sm">
+        <h1>Ceramics Collection</h1>
+        <div class="search-pill hidden-mobile" style="border: 1px solid #D1D1D6;">
+            <select id="sort-select" style="background:transparent; border:none; outline:none; font-family:inherit; padding-right: 16px;">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name">Alphabetical</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Category Nav -->
+    <nav class="category-list mb-lg" id="category-filters">
+      <button class="pill-btn active" data-filter="all">All</button>
+      <button class="pill-btn" data-filter="Ceramic">Ceramic</button>
+      <button class="pill-btn" data-filter="Sculptural">Sculptural</button>
+      <button class="pill-btn" data-filter="Minimalist">Minimalist</button>
+      <button class="pill-btn" data-filter="Textured">Textured</button>
+      <button class="pill-btn" data-filter="Tall Vases">Tall Vases</button>
+    </nav>
+
+    <!-- Product Grid -->
+    <main id="shop-grid" class="grid mb-xl" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <!-- Skeleton Loaders -->
+        <div class="bento-card" style="min-height: 400px; background: #EEE; animation: pulse 1.5s infinite;"></div>
+        <div class="bento-card" style="min-height: 400px; background: #EEE; animation: pulse 1.5s infinite; animation-delay: 0.2s;"></div>
+        <div class="bento-card" style="min-height: 400px; background: #EEE; animation: pulse 1.5s infinite; animation-delay: 0.4s;"></div>
+        <div class="bento-card" style="min-height: 400px; background: #EEE; animation: pulse 1.5s infinite; animation-delay: 0.6s;"></div>
+    </main>
+
+    <div id="footer-root"></div>
+
+  </div>
+
+  <style>
+      @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+  </style>
+
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          let currentFilter = 'all';
+          let currentSort = 'featured';
+
+          const renderGrid = () => {
+              const container = document.getElementById('shop-grid');
+              if (!container) return;
+
+              let filtered = [...window.store.products];
+
+              if (currentFilter !== 'all') {
+                  filtered = filtered.filter(p => p.category === currentFilter);
+              }
+
+              if (currentSort === 'price-low') {
+                  filtered.sort((a,b) => a.price - b.price);
+              } else if (currentSort === 'price-high') {
+                  filtered.sort((a,b) => b.price - a.price);
+              } else if (currentSort === 'name') {
+                  filtered.sort((a,b) => a.name.localeCompare(b.name));
+              }
+
+              if (filtered.length === 0) {
+                  container.innerHTML = '<p class="text-muted p-lg">No products found for this filter.</p>';
+                  return;
+              }
+
+              container.innerHTML = filtered.map(p => window.components.renderProductCard(p)).join('');
+          };
+
+          // Listen for store data
+          window.store.subscribe((state) => {
+              if (state.products.length > 0) {
+                  renderGrid();
+              }
+          });
+
+          // Filter logic
+          document.querySelectorAll('#category-filters .pill-btn').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                  document.querySelectorAll('#category-filters .pill-btn').forEach(b => b.classList.remove('active'));
+                  e.target.classList.add('active');
+                  currentFilter = e.target.dataset.filter;
+                  renderGrid();
+              });
+          });
+
+          // Sort logic
+          document.getElementById('sort-select').addEventListener('change', (e) => {
+              currentSort = e.target.value;
+              renderGrid();
+          });
+      });
+  </script>
+</body>
+</html>

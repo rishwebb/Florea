@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Floréa</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container page-transition">
+    
+    <div id="header-root"></div>
+
+    <main class="grid mt-sm mb-xl" style="grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+        
+        <!-- Form -->
+        <div class="bento-card" style="padding: var(--space-xl); background: #FFF;">
+            <h1 style="line-height: 1.1; margin-bottom: var(--space-sm);">Get in Touch.</h1>
+            <p class="text-muted mb-lg">Have a question about an order, our materials, or styling advice? We're here to help.</p>
+            
+            <form class="flex flex-col gap-md" onsubmit="event.preventDefault(); window.components.showToast('Message sent! We will reply soon.', 'success'); this.reset();">
+                <input type="text" placeholder="Your Name" class="input-pill" required>
+                <input type="email" placeholder="Email Address" class="input-pill" required>
+                <textarea placeholder="How can we help?" class="input-pill" style="min-height: 150px; border-radius: 24px; padding-top: 24px; resize: none;" required></textarea>
+                <button type="submit" class="btn-pill-black mt-sm">Send Message</button>
+            </form>
+        </div>
+
+        <!-- Info -->
+        <div class="flex flex-col gap-sm">
+            <div class="bento-card flex-1 flex flex-col justify-center items-center text-center" style="background: #E8E5E1; padding: var(--space-xl);">
+                <i class="ph ph-map-pin" style="font-size: 48px; margin-bottom: 16px;"></i>
+                <h3 class="mb-xs">Copenhagen Studio</h3>
+                <p class="text-muted">Strøget 42, 1160 København<br>Denmark</p>
+                <p class="text-sm mt-md font-medium">Mon - Fri: 10am - 6pm</p>
+            </div>
+            
+            <div class="bento-row grid gap-sm" style="grid-template-columns: 1fr 1fr;">
+                <div class="bento-card card-info flex flex-col items-center justify-center text-center" style="padding: var(--space-lg); background: #F0F0F0;">
+                    <i class="ph ph-envelope text-muted mb-xs" style="font-size: 32px;"></i>
+                    <p style="font-weight: 500;">hello@florea.com</p>
+                    <p class="text-xs text-muted mt-xs">Reply within 24h</p>
+                </div>
+                <div class="bento-card card-info flex flex-col items-center justify-center text-center" style="padding: var(--space-lg); background: #F0F0F0;">
+                    <i class="ph ph-phone text-muted mb-xs" style="font-size: 32px;"></i>
+                    <p style="font-weight: 500;">+45 20 12 34 56</p>
+                    <p class="text-xs text-muted mt-xs">Support Hotline</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="footer-root"></div>
+  </div>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+</body>
+</html>

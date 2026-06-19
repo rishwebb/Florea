@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist | Floréa</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container page-transition">
+    
+    <div id="header-root"></div>
+
+    <div class="flex justify-between items-end mb-lg mt-sm">
+        <div class="flex items-center gap-sm">
+            <i class="ph-fill ph-heart text-red" style="font-size: 2.5rem;"></i>
+            <h1 style="font-size: 2.5rem; margin:0;">Wishlist</h1>
+        </div>
+        <a href="shop.html" class="pill-btn hidden-mobile">Continue Shopping</a>
+    </div>
+
+    <main id="wishlist-grid" class="grid mb-xl" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <!-- Rendered via JS -->
+    </main>
+
+    <div id="empty-msg" class="text-center p-xl mb-xl hidden" style="background: #FFF; border-radius: 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px;">
+        <i class="ph ph-heart text-muted mb-md" style="font-size: 64px;"></i>
+        <h3 class="mb-sm">Your wishlist is empty</h3>
+        <p class="text-muted mb-lg">Discover our collections and save your favorite pieces.</p>
+        <a href="shop.html" class="pill-btn hover-elevate mt-md" style="background: #111; color: #FFF; border: none; padding: 12px 32px; font-size: 0.95rem;">Explore Ceramics</a>
+    </div>
+
+    <div id="footer-root"></div>
+
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          const renderWishlist = () => {
+              const state = window.store;
+              const container = document.getElementById('wishlist-grid');
+              const emptyMsg = document.getElementById('empty-msg');
+              
+              if (state.products.length === 0) return; // Wait for products
+
+              const wishlistedProducts = state.products.filter(p => state.isInWishlist(p.id));
+
+              if (wishlistedProducts.length === 0) {
+                  container.innerHTML = '';
+                  container.classList.add('hidden');
+                  emptyMsg.classList.remove('hidden');
+              } else {
+                  emptyMsg.classList.add('hidden');
+                  container.classList.remove('hidden');
+                  container.innerHTML = wishlistedProducts.map(p => window.components.renderProductCard(p)).join('');
+              }
+          };
+
+          window.store.subscribe(renderWishlist);
+      });
+  </script>
+</body>
+</html>

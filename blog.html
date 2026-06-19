@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspiration | Floréa</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app-container page-transition">
+    
+    <div id="header-root"></div>
+
+    <div class="flex justify-between items-center mb-md mt-sm">
+        <h1>Inspiration Journal</h1>
+        <div class="search-pill hidden-mobile">
+            <input type="text" placeholder="Search articles..." style="background:transparent; border:none; outline:none; font-family:inherit;">
+            <button class="icon-btn-black"><i class="ph ph-magnifying-glass"></i></button>
+        </div>
+    </div>
+
+    <!-- Category Nav -->
+    <nav class="category-list mb-lg">
+      <button class="pill-btn active">All Entries</button>
+      <button class="pill-btn">Interior Styling</button>
+      <button class="pill-btn">Craftsmanship</button>
+      <button class="pill-btn">Seasonal Florals</button>
+    </nav>
+
+    <main class="grid mb-xl" style="grid-template-columns: 2fr 1fr; gap: var(--space-md);">
+        
+        <!-- Feature Article -->
+        <a href="article.html" class="bento-card product-card-anim" style="min-height: 600px; background: #E2DFDF; position: relative;">
+            <img src="assets/images/interior_styling_1781843302973.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;">
+            <div class="floating-glass-card" style="bottom: var(--space-md); left: var(--space-md); position: absolute; width: calc(100% - var(--space-md) * 2);">
+                <div class="flex justify-between items-start mb-sm">
+                    <span class="badge outline bg-white">INTERIOR STYLING</span>
+                    <span class="text-xs font-semibold">5 min read</span>
+                </div>
+                <h2 style="margin-bottom: 8px;">Minimalist Spaces: Finding Calm Through Curated Objects</h2>
+                <p class="text-muted">How to arrange your ceramics to create a sense of peace in your living room.</p>
+            </div>
+        </a>
+
+        <!-- Side Articles -->
+        <div class="flex flex-col gap-md">
+            <a href="article.html" class="bento-card flex-1 product-card-anim" style="background: #E8E5E1; padding: var(--space-md); display: flex; flex-direction: column; justify-content: flex-end; position: relative;">
+                <img src="assets/images/vase_product_1_1781843259747.png" style="position: absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity: 0.5; transition: transform 0.5s;">
+                <div class="z-10 relative bg-white p-md" style="border-radius: var(--radius-card-sm); padding: var(--space-md);">
+                    <div class="flex justify-between items-start mb-xs">
+                        <span class="badge outline">CRAFTSMANSHIP</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; line-height: 1.3;">The Art of Matte Glaze</h3>
+                </div>
+            </a>
+            
+            <a href="article.html" class="bento-card flex-1 product-card-anim" style="background: #EAE6DF; padding: var(--space-md); display: flex; flex-direction: column; justify-content: flex-end; position: relative;">
+                <img src="assets/images/vase_product_2_1781843273686.png" style="position: absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity: 0.5; transition: transform 0.5s;">
+                <div class="z-10 relative bg-white" style="border-radius: var(--radius-card-sm); padding: var(--space-md);">
+                    <div class="flex justify-between items-start mb-xs">
+                        <span class="badge outline">SEASONAL</span>
+                    </div>
+                    <h3 style="font-size: 1.25rem; line-height: 1.3;">Winter Stems for Textured Vases</h3>
+                </div>
+            </a>
+        </div>
+
+    </main>
+
+    <div id="footer-root"></div>
+  </div>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+</body>
+</html>
