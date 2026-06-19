@@ -7,6 +7,19 @@ window.components = {
         this.renderFooter();
         this.setupToastContainer();
         
+        // Mobile menu logic
+        setTimeout(() => {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const closeBtn = document.querySelector('.mobile-menu-close');
+            const drawer = document.getElementById('mobile-drawer');
+            if (menuBtn && drawer) {
+                menuBtn.addEventListener('click', () => drawer.classList.add('open'));
+            }
+            if (closeBtn && drawer) {
+                closeBtn.addEventListener('click', () => drawer.classList.remove('open'));
+            }
+        }, 100);
+
         // Re-render header when store updates to catch badge changes
         window.store.subscribe(() => {
             this.updateBadges();
@@ -48,6 +61,21 @@ window.components = {
         </header>
         `;
 
+        // Render Drawer to Body
+        if (!document.getElementById('mobile-drawer')) {
+            const drawer = document.createElement('div');
+            drawer.id = 'mobile-drawer';
+            drawer.className = 'mobile-drawer';
+            drawer.innerHTML = `
+                <button class="mobile-menu-close"><i class="ph ph-x" style="font-size: 24px;"></i></button>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">Story</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="blog.html" class="nav-link">Journal</a>
+            `;
+            document.body.appendChild(drawer);
+        }
+
         // Mobile menu toggle logic
         const mobileBtn = headerRoot.querySelector('.mobile-menu-btn');
         if(mobileBtn) {
@@ -79,7 +107,7 @@ window.components = {
         if (!footerRoot) return;
 
         footerRoot.innerHTML = `
-        <footer class="mt-2xl fade-in-section" style="padding: var(--space-xl) 0 var(--space-md); border-top: 1px solid #E0E0E0; background: #F5F5F7;">
+        <footer class="mt-2xl pt-xl pb-md fade-in-section" style="border-top: 1px solid #E0E0E0; background: #F5F5F7;">
             <div class="grid" style="grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--space-lg); margin-bottom: var(--space-xl);">
                 <div class="flex flex-col gap-sm">
                     <a href="index.html" class="logo-pill inline-flex w-fit mb-xs">
@@ -135,25 +163,26 @@ window.components = {
         const bg = bgColors[product.id.charCodeAt(product.id.length-1) % bgColors.length];
 
         return `
-        <div class="bento-card product-card-anim" style="min-height: 400px; background: ${bg}; display: flex; flex-direction: column;">
-            <a href="product.html?id=${product.id}" style="flex: 1; position: relative; display: block;">
-                <div class="floating-glass-card top-left" style="top: 16px; left: 16px; min-width: auto; padding: 12px; z-index: 2;">
-                    <div class="price-row" style="margin-bottom: 0;">
-                        <span class="price" style="font-size: 1.2rem;">$${product.price}</span>
-                        ${product.compareAtPrice ? `<span class="text-muted text-sm ml-xs" style="text-decoration: line-through;">$${product.compareAtPrice}</span>` : ''}
-                    </div>
+        <div class="bento-card hover-zoom product-card-anim" style="min-height: 450px; background: ${bg}; display: flex; flex-direction: column; position: relative;">
+            <div class="floating-glass-card top-left z-10" style="top: 16px; left: 16px; min-width: auto; padding: 12px;">
+                <div class="price-row flex items-center" style="margin-bottom: 0;">
+                    <span class="price" style="font-size: 1.2rem;">$${product.price}</span>
+                    ${product.compareAtPrice ? `<span class="text-muted text-sm ml-xs" style="text-decoration: line-through;">$${product.compareAtPrice}</span>` : ''}
                 </div>
+            </div>
+            
+            <a href="product.html?id=${product.id}" style="flex: 1; position: relative; display: block;">
                 <img src="${product.images[0]}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; padding: 40px; transition: transform 0.5s ease;">
             </a>
             
-            <div class="floating-actions bottom-right z-10" style="bottom: 16px; right: 16px;">
-                <button class="icon-btn-glass btn-wishlist" data-id="${product.id}"><i class="${heartClass} ph-heart"></i></button>
-                <button class="icon-btn-glass btn-add-cart" data-id="${product.id}"><i class="ph-fill ph-shopping-bag"></i></button>
+            <div class="z-10" style="padding: 20px; padding-bottom: 80px; pointer-events: none;">
+                <h3 style="font-size: 1.3rem;">${product.name}</h3>
+                <p class="text-sm text-muted mt-xs" style="line-height: 1.4;">${product.category}</p>
             </div>
-            
-            <!-- Simple Overlay Info for aesthetics -->
-            <div style="padding: 16px; position: absolute; bottom: 0; left: 0; pointer-events: none;">
-                <span class="subtitle text-main" style="font-weight: 500;">${product.name}</span>
+
+            <div class="floating-actions bottom-right z-10" style="bottom: 16px; right: 16px;">
+                <button class="icon-btn-glass hover-elevate btn-wishlist" data-id="${product.id}"><i class="${heartClass} ph-heart"></i></button>
+                <button class="icon-btn-glass hover-elevate btn-add-cart" data-id="${product.id}"><i class="ph-fill ph-shopping-bag"></i></button>
             </div>
         </div>
         `;
